@@ -86,13 +86,14 @@ pub mod pallet {
     
     #[pallet::call]
     impl<T: Config> Pallet<T> {
-        /// Set the value of the counter.
-        ///
-        /// The dispatch origin of this call must be _Root_.
-        ///
-        /// - `new_value`: The new value to set for the counter.
-        ///
-        /// Emits `CounterValueSet` event when successful.
+        // call_index用于指定调用的索引号，从0开始顺序递增
+        // 它帮助运行时系统快速定位和调用特定的函数
+        // 每个pallet中的call_index必须是唯一的
+        
+        // weight表示执行该调用所需的计算资源
+        // 0表示默认权重，实际使用时应根据操作复杂度设置适当值
+        // weight用于防止资源滥用，确保区块链网络的安全和稳定
+        // 复杂的操作需要更高的weight，用户需要支付更多费用
         #[pallet::call_index(0)]
         #[pallet::weight(0)]
         pub fn set_counter_value(origin: OriginFor<T>, new_value: u32) -> DispatchResult {
@@ -158,13 +159,7 @@ pub mod pallet {
 
         }
     
-        /// Decrement the counter by a specified amount.
-        ///
-        /// This function can be called by any signed account.
-        ///
-        /// - `amount_to_decrement`: The amount by which to decrement the counter.
-        ///
-        /// Emits `CounterDecremented` event when successful.
+    
         #[pallet::call_index(2)]
         #[pallet::weight(0)]
         pub fn decrement(origin: OriginFor<T>, amount_to_decrement: u32) -> DispatchResult {
