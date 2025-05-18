@@ -4,6 +4,12 @@
 
 //pallet是mod，use的是方法
 pub use pallet::*;
+#[cfg(test)]
+mod mock;
+
+#[cfg(test)]
+mod tests;
+
 //这是一个宏调用，用来标记接下来的模块是Substrate pallet
 #[frame::pallet]
 //定义一个名为pallet的公共模块
@@ -159,7 +165,7 @@ pub mod pallet {
 
         }
     
-    
+
         #[pallet::call_index(2)]
         #[pallet::weight(0)]
         pub fn decrement(origin: OriginFor<T>, amount_to_decrement: u32) -> DispatchResult {

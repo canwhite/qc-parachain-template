@@ -61,6 +61,8 @@ named-preset development
 
 4. Start the omni node with the generated chain spec. You'll start it in development mode (without a relay chain config), producing and finalizing blocks:
 
+run:
+
 ```
 polkadot-omni-node --chain ./chain_spec.json --dev
 ```
@@ -77,4 +79,10 @@ Connect to your local node:
 2) Choose Custom
 3) Enter ws://localhost:9944 in the input field
 4) Click the Switch button
+```
+
+## test
+
+```
+argo test --package custom-pallet
 ```
