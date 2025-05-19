@@ -68,6 +68,7 @@ parameter_types! {
 impl custom_pallet::Config for Test {
     type RuntimeEvent = RuntimeEvent;
     type CounterMaxValue = CounterMaxValue;
+    type WeightInfo = custom_pallet::weights::SubstrateWeight<Test>;
 }
 
 // Test externalities initialization

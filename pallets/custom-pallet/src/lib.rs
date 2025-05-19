@@ -10,6 +10,12 @@ mod mock;
 #[cfg(test)]
 mod tests;
 
+#[cfg(feature = "runtime-benchmarks")]
+mod benchmarking;
+
+pub mod weights;
+use crate::weights::WeightInfo;
+
 //这是一个宏调用，用来标记接下来的模块是Substrate pallet
 #[frame::pallet]
 //定义一个名为pallet的公共模块
@@ -32,6 +38,9 @@ pub mod pallet {
 
         // Defines the maximum value the counter can hold.
         type CounterMaxValue: Get<u32>;
+
+        /// A type representing the weights required by the dispatchables of this pallet.
+        type WeightInfo: WeightInfo;
     }
 
     //defines the events so that communicate with outside world 
@@ -101,7 +110,7 @@ pub mod pallet {
         // weight用于防止资源滥用，确保区块链网络的安全和稳定
         // 复杂的操作需要更高的weight，用户需要支付更多费用
         #[pallet::call_index(0)]
-        #[pallet::weight(0)]
+        #[pallet::weight(T::WeightInfo::set_counter_value())]
         pub fn set_counter_value(origin: OriginFor<T>, new_value: u32) -> DispatchResult {
             ensure_root(origin);
             
@@ -120,7 +129,7 @@ pub mod pallet {
 
 
         #[pallet::call_index(1)]
-        #[pallet::weight(0)]
+        #[pallet::weight(T::WeightInfo::increment())]
         pub fn increment(origin: OriginFor<T>, amount_to_increment: u32) -> DispatchResult {
             //拿到给谁
             let who = ensure_signed(origin)?;
@@ -167,7 +176,7 @@ pub mod pallet {
     
 
         #[pallet::call_index(2)]
-        #[pallet::weight(0)]
+        #[pallet::weight(T::WeightInfo::decrement())]
         pub fn decrement(origin: OriginFor<T>, amount_to_decrement: u32) -> DispatchResult {
             let who = ensure_signed(origin)?;
 
@@ -199,6 +208,5 @@ pub mod pallet {
             Ok(())
         }
     }
-
 
 }

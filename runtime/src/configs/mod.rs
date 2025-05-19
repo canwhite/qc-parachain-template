@@ -335,5 +335,6 @@ parameter_types! {
 impl custom_pallet::Config for Runtime {
     type RuntimeEvent = RuntimeEvent;
     type CounterMaxValue = CounterMaxValue;
-    // 移除 WeightInfo 行，因为在 custom_pallet::Config 中没有定义这个类型
+    // 移除 WeightInfo 行，因为在 custom_pallet::Config 中没有定义这个类型,等有了weights之后再加上
+	type WeightInfo = custom_pallet::weights::SubstrateWeight<Runtime>;
 }
